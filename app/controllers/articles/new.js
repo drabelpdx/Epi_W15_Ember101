@@ -1,19 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  isValid: Ember.computed(
-    'model.description',
-    {
-      get() {
-        return !Ember.isEmpty(this.get('model.description'));
-      }
-    }
+  hasDescription: Ember.computed.notEmpty('model.description'),
+  isValid: Ember.computed.and(
+    'hasDescription'
   ),
 
   actions: {
     save() {
       if (this.get('isValid')) {
-        this.get('model').save().then((article) => {
+        this.get('model').save().then(() => {
           this.transitionToRoute('articles');
         });
       } else {
