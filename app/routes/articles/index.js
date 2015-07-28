@@ -15,7 +15,8 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    save() {
+    save(model) {
+      model.save();
       return false;
     },
     cancel() {
