@@ -2,25 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
-    return this.modelFor('friends/show').get('articles');
-  },
-  resetController(controller, isExiting) {
-    if (isExiting) {
-      var model = controller.get('model');
+    let articles = this.modelFor('friends/show').get('articles');
 
-      if (model.get('isNew')) {
-        model.destroyRecord();
-      }
+    if (articles.get('isFulfilled')) {
+      articles.reload();
     }
+
+    return articles;
   },
 
   actions: {
     save(model) {
       model.save();
       return false;
-    },
-    cancel() {
-      return false;
+  
     }
   }
 });
